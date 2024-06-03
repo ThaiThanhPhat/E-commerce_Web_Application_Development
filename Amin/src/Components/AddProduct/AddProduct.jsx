@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
 import './AddProduct.css'
 import upload_area from '../../assets/upload_area.svg'
+import { v4 as uuidv4 } from 'uuid';
+
 
 const AddProduct = () => {
     const [image, setImage] = useState(false);
     const [productDetails, setProductDetails] = useState({
+        id: uuidv4(),
         name: "",
         image: "",
         category: "women",
@@ -36,6 +39,16 @@ const AddProduct = () => {
         if(responseData.success){
             product.image = responseData.image_url;
             console.log(product);
+            await fetch('http://localhost:4000/addproduct',{
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(product),
+            }).then((resp)=>resp.json()).then((data)=>{
+                data.success ? alert("Product Added") : alert("Failed");
+            })
         }
     }
   return (
@@ -59,7 +72,7 @@ const AddProduct = () => {
             <select value={productDetails.category} onChange={changeHandler} name="category" className='add-product-selector'>
                 <option value="women">Women</option>
                 <option value="men">Men</option>
-                <option value="kid">Kids</option>
+                <option value="kid">Kid</option>
             </select>
         </div>
         <div className="addproduct-itemfield">
