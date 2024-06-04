@@ -1,13 +1,11 @@
 import React, { useState } from 'react'
 import './AddProduct.css'
 import upload_area from '../../assets/upload_area.svg'
-import { v4 as uuidv4 } from 'uuid';
 
 
 const AddProduct = () => {
     const [image, setImage] = useState(false);
     const [productDetails, setProductDetails] = useState({
-        id: uuidv4(),
         name: "",
         image: "",
         category: "women",
@@ -34,7 +32,7 @@ const AddProduct = () => {
                 Accept: "application/json",
             },
             body: formData,
-        }).then((resp) => resp.json()).then((data)=>{responseData = data});
+        }).then((resp) => resp.json()).then((data)=>{responseData = data})
 
         if(responseData.success){
             product.image = responseData.image_url;
