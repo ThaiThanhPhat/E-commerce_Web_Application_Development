@@ -80,12 +80,11 @@ const Product = mongoose.model("Product",{
 app.post('/addproduct', async(req, res)=>{
     let products = await Product.find({});
     let id;
-    if(products.length > 0)
-        {
+    if(products.length > 0){
         let last_product_array = products.slice(-1);
         let last_product = last_product_array[0];
         id = last_product.id + 1;
-        }
+    }
     else{
         id=1;
     }
@@ -210,7 +209,7 @@ app.get('/newcollections', async(req, res)=>{
 //Creating Endpoint for polular in women section
 app.get('/popularinwomen', async(req, res)=>{
     let products = await Product.find({category:"women"});
-    let popular_in_women = products.slice(0,4);
+    let popular_in_women = products.slice(5,9);
     console.log("Popular in women fetched");
     res.send(popular_in_women);
 })
